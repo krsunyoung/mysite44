@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+
+	<insert id="insert" parameterType="com.bit2016.mysite.vo.UserVo">
+		<!-- CDATA 는 컨텐트 데이터 꺽새를 끝으로 인식하지 않음. -->
+		<![CDATA[ 
+		insert into users values(user_seq.nextval, #{name },#{email },#{password },#{gender })
+		]]>
+	</insert>
+
+	<!-- DB와 Vo의 이름이 다를때 as로 DB이름을 바꿔준다. -->
+	<select id="getByEmailAndPassword" parameterType="map"
+		resultType="uservo">
+	<![CDATA[
+		select no, name from users where email=#{email } and password= #{password }
+	 ]]>
+	</select>
+
+	<select id="getByEmail" parameterType="string" resultType="uservo">
+		<!-- 뒤에 이름은 셋팅할수 있는 이름이 없어서 아무거나 써줘도 되지만 가능하면 맞춰주는것이 좋다. -->
+		<![CDATA[ 
+		select no , email, name from users where email= #{email } 
+		]]>
+	</select>
+
+	<select id="getByNo" parameterType="long" resultType="uservo">
+		<!-- 뒤에 이름은 셋팅할수 있는 이름이 없어서 아무거나 써줘도 되지만 가능하면 맞춰주는것이 좋다. -->
+		<![CDATA[ 
+		select no, name, email, gender from users where no= #{no }
+		]]>
+	</select>
+
+	<update id="update" parameterType="uservo">
+	<![CDATA[ 
+		update set  ]]>
+		<if test="password !=null and password != '' ">
+				<![CDATA[
+			password=#{password },
+				]]>
+		</if>
+				<![CDATA[
+			name=#{name }, gender=#{gender }
+		where no=#{no } 
+	]]>
+	</update>
+</mapper>
