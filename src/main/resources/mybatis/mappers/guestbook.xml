@@ -8,4 +8,17 @@
 		from GUESTBOOK order by req_date desc
 	]]>
 	</select>
+	
+	<delete id ="delete" parameterType="guestbookvo" >
+	<![CDATA[
+	delete from guestbook where no = #{no } and password = #{password }
+	]]>
+	</delete>
+	
+	<insert id="insert" parameterType="guestbookvo">
+	<![CDATA[ 
+	insert into GUESTBOOK VALUES(guestbook_seq.nextval, #{name }, #{content } , #{password }, sysdate)
+	]]>
+	</insert>
+	
 </mapper>

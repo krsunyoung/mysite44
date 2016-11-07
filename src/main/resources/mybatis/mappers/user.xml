@@ -34,7 +34,7 @@
 
 	<update id="update" parameterType="uservo">
 	<![CDATA[ 
-		update set  ]]>
+		update users set  ]]>
 		<if test="password !=null and password != '' ">
 				<![CDATA[
 			password=#{password },
