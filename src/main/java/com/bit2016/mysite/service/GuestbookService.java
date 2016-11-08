@@ -15,15 +15,26 @@ public class GuestbookService {
 	private GuestbookDao guestbookDao;
 	
 	public void add(GuestbookVo vo){
-		guestbookDao.insert(vo);
+		Long no = guestbookDao.insert(vo);
+		System.out.println(no);
+		//GuestbookVo vo = guestbookDao.get
 	}
-	
+
+	public GuestbookVo add2(GuestbookVo vo){
+		Long no = guestbookDao.insert(vo);
+		System.out.println(no);
+		return null;
+	}
 	public List<GuestbookVo> list(){
 		List<GuestbookVo> list= guestbookDao.getList();
 		return  list;
 	}
+	public List<GuestbookVo> list(int page){
+		return guestbookDao.getList(page);
+	}
 	public void delete(GuestbookVo vo){
 		guestbookDao.delete(vo);
 	}
+
 	
 }

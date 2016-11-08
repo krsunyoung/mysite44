@@ -30,9 +30,8 @@ public class GuestbookController {
 	@RequestMapping(value="/insert")
 	public String insert(@ModelAttribute GuestbookVo vo){
 		guestbookService.add(vo);
-		return "redirect:/";
+		return "redirect:/guestbook";
 	}
-	
 	
 	@RequestMapping("/deleteform/{no}")
 	public String deleteform(@PathVariable("no") int no, Model model){
@@ -42,11 +41,14 @@ public class GuestbookController {
 		
 	}
 	
-	
-	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/delete", method=RequestMethod.GET)
 	public String delete(@ModelAttribute GuestbookVo vo){
 		guestbookService.delete(vo);
-		return "redirect:/";
+		return "redirect:/guestbook";
+	}
+	@RequestMapping("/ajax")
+	public String ajax(){
+		return "guestbook/list-ajax";
 	}
 	
 }

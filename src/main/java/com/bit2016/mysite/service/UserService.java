@@ -28,4 +28,8 @@ public class UserService {
 		userDao.update(vo);
 	}
 	
+	public boolean emailExist(String email){
+		return userDao.get(email) != null ;
+		
+	}
 }

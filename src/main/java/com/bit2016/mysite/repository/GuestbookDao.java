@@ -14,20 +14,20 @@ public class GuestbookDao {
 	private SqlSession sqlSession;
 
 	public void delete(GuestbookVo vo) {
-		
 		sqlSession.delete("guestbook.delete", vo);
-		
 	}
 
-	public void insert(GuestbookVo vo) {
-		
+	public Long insert(GuestbookVo vo) {
 		sqlSession.insert("guestbook.insert",vo);
+		return vo.getNo();
 	}
 
 	public List<GuestbookVo> getList(){
 			// List<GuestbookVo> list = sqlSession.selectList("guestbook.getList);
 			//return list;
 		return sqlSession.selectList("guestbook.getList");
-		
+	}
+	public List<GuestbookVo> getList(int page){
+		return sqlSession.selectList("guestbook.getListByPage",page);
 	}
 }

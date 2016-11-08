@@ -17,7 +17,7 @@
 <script> 
 var isEnd = false;
 var page=0;
-var render = function(vo){
+var render = function(vo,mode){
 	//
 	// 현업에서는 이부분을 template library 로 쓰임 ex) ejs
 	//
@@ -28,9 +28,11 @@ var render = function(vo){
 		"<strong>"+vo.req_date+"</strong>"+
 		"<a href='' data-no='"+vo.no+"'+>삭제</a>"+
 		"</li>";
-		
+	if(mode == true){
+		$("#list-guestbook").preappend(htmls);
+	}else{
 		$("#list-guestbook").append(htmls);
-		
+	}
 }
 var fetchList = function(){
 	if(isEnd ==true){
@@ -38,11 +40,10 @@ var fetchList = function(){
 	}
 	++page;
 	$.ajax({
-		url :"${pageContext.request.contextPath }/api/guestbook?a=ajax-list&p="+page,
+		url :"${pageContext.request.contextPath }/guestbook/api/list?p="+page,
 		type : "get",
 		dataType: "json",
-		success:function(response){ //response.result="success" or "fail" 
-									//response.data 가 배열로 나옴 =  [{}, {},{} ...]
+		success:function(response){ //response.result="success" or "fail" response.data 가 배열로 나옴 =  [{}, {},{} ...]
 			if(response.result != "success"){
 				console.error(response.message);
 				isEnd=true;
@@ -50,7 +51,7 @@ var fetchList = function(){
 			}
 			//redering
 			$(response.data).each(function(index, vo){
-				render(vo);				
+				render(vo,false);				
 			});
 			
 			if(response.data.length<5){ 
@@ -72,7 +73,7 @@ $(function(){
 		$("#password-id").val($(this).attr("data-no"));
 		console.log("테스트중");
 		
-		dialog = $( "#delete-form" ).dialog({
+		var dialog = $( "#delete-form" ).dialog({
 		    autoOpen: false,
 		    height: 200,
 		    width: 350,
@@ -81,10 +82,9 @@ $(function(){
 		      "삭제": function(){
 		    	  var no =$("#password-id").val();
 		    	  var password =$("#password").val();
-		    	  console.log(no);
-		    	  console.log(password);
+					console.log(password);
 		    	  $.ajax({
-		    			url :"${pageContext.request.contextPath }/api/guestbook?a=ajax-delete&no="+no+"&password="+password,
+		    			url :"${pageContext.request.contextPath }/guestbook/api/delete?no="+no+"&password="+password,
 		    			type : "get",
 		    			dataType: "json",
 		    			data:"",
@@ -95,13 +95,12 @@ $(function(){
 		    					isEnd=true;
 		    					return;
 		    				}
+		    				$("#gb-"+response.data).remove(); // html에 li 를 삭제 자동적으로 해주는것. 
 		    				dialog.dialog( "close" );
-		    				$(response.data).each(function(index, vo){
-		    					render(vo);				
-		    				});
+
+		    			//	$("#gb-"+no).remove(); // html에 li 를 삭제 자동적으로 해주는것.
 		    				
-		    				$("#gb-"+no).remove(); // html에 li 를 삭제 자동적으로 해주는것. 
-		    			   	
+		    			//  	console.log(response.data);
 		    			}, error: function(jqXHR, status, e){
 		    				console.error(status +":"+e);
 		    			}
@@ -125,9 +124,53 @@ $(function(){
 		console.log("테스트중");
 	})
 	 */
+	 
 	$("#add-form").submit(function(event){
 		event.preventDefault();
-		
+		var name = $( "#input-name" ).val();
+		if( name == "" ) {
+			messageBox( "메세지 입력", "이름은 필수 입력 항목입니다.", function(){
+				$( "#input-name" ).focus();
+			} );
+			return;
+		}
+		var password = $( "#input-password" ).val();
+		if( password == "" ) {
+			messageBox( "메세지 입력", "비밀번호는 필수 입력 항목입니다.", function(){
+				$( "#input-password" ).focus();
+			} );
+			return;
+		}
+		var content = $( "#tx-content" ).val();
+		if( content == "" ) {
+			messageBox( "메세지 입력", "내용이 비어 있습니다.", function(){
+				$( "#tx-content" ).focus();
+			} );
+			return;
+		}
+		$.ajax({
+			url: "${pageContext.request.contextPath }/api/guestbook",
+			type: "post",
+			dataType: "json",
+			data: "a=ajax-add" +
+				  "&name=" + name + 
+			  	"&password=" + password + 
+			  	"&content=" + content,
+			success: function( response ) { 
+				if( response.result != "success" ) {
+					console.error( response.message );
+				return;
+			}
+			
+			// rendering
+			render( response.data, true );
+			// 폼지우기
+			$( "#add-form" )[0].reset();
+		},
+		error: function( jqXHR, status, e ) {
+			console.error( status + ":" + e );
+		}
+	});
 		//ajax insert
 		/*
 		url => api/guestbook
