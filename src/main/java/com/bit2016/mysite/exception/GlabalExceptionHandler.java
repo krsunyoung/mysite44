@@ -31,7 +31,6 @@ public class GlabalExceptionHandler {
 	public ModelAndView handlerException(HttpServletRequest request, Exception e ){
 		//1.로깅
 		System.out.println("exception : "+e);
-		
 		//2.ajax 요청 여부 판단
 		/*
 		 if("application/json".equals(request.getContentType())){

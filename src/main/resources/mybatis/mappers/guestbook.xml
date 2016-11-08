@@ -35,4 +35,10 @@
 	]]>
 	</select>
 	
+	<select id="getByNo"	resultType="guestbookvo" parameterType="long">
+	<![CDATA[
+	select no, name , content, to_char(req_date,'yyyy-mm-dd hh:mi:ss') as req_date from guestbook where no = #{no }
+	]]>
+	</select>
+	
 </mapper>

@@ -20,9 +20,9 @@ public class BoardController {
 	
 	@RequestMapping("")
 	public String list(
-			@RequestParam(value="keyword", required =true, defaultValue=" ")String keyword,
-			@RequestParam(value="page", required =true, defaultValue=" ")Integer page,
-			@RequestParam(value="size", required =true, defaultValue=" ")Integer size,
+			@RequestParam(value="keyword", required =true, defaultValue=" ") String keyword,
+			@RequestParam(value="page", required =true, defaultValue=" ") Integer page,
+			@RequestParam(value="size", required =true, defaultValue=" ") Integer size,
 			Model model){
 		List<BoardVo> list= boardService.list(keyword, page, size);
 		model.addAttribute("list", list);

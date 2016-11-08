@@ -29,7 +29,7 @@ var render = function(vo,mode){
 		"<a href='' data-no='"+vo.no+"'+>삭제</a>"+
 		"</li>";
 	if(mode == true){
-		$("#list-guestbook").preappend(htmls);
+		$("#list-guestbook").prepend(htmls);
 	}else{
 		$("#list-guestbook").append(htmls);
 	}
@@ -49,6 +49,7 @@ var fetchList = function(){
 				isEnd=true;
 				return;
 			}
+		
 			//redering
 			$(response.data).each(function(index, vo){
 				render(vo,false);				
@@ -83,6 +84,7 @@ $(function(){
 		    	  var no =$("#password-id").val();
 		    	  var password =$("#password").val();
 					console.log(password);
+					
 		    	  $.ajax({
 		    			url :"${pageContext.request.contextPath }/guestbook/api/delete?no="+no+"&password="+password,
 		    			type : "get",
@@ -127,33 +129,32 @@ $(function(){
 	 
 	$("#add-form").submit(function(event){
 		event.preventDefault();
-		var name = $( "#input-name" ).val();
-		if( name == "" ) {
+		var name = $( "#name" ).val();
+		/*if( name == "" ) {
 			messageBox( "메세지 입력", "이름은 필수 입력 항목입니다.", function(){
-				$( "#input-name" ).focus();
+				$( "#name" ).focus();
 			} );
 			return;
-		}
-		var password = $( "#input-password" ).val();
+		}*/
+		var password = $( "#password" ).val();
 		if( password == "" ) {
-			messageBox( "메세지 입력", "비밀번호는 필수 입력 항목입니다.", function(){
-				$( "#input-password" ).focus();
-			} );
-			return;
+			/*			messageBox( "메세지 입력", "비밀번호는 필수 입력 항목입니다.", function(){
+				$( "#password" ).focus();
+			} ); */
+			return false;
 		}
 		var content = $( "#tx-content" ).val();
-		if( content == "" ) {
+		/*if( content == "" ) {
 			messageBox( "메세지 입력", "내용이 비어 있습니다.", function(){
-				$( "#tx-content" ).focus();
+				$( "#content" ).focus();
 			} );
 			return;
-		}
+		}*/
 		$.ajax({
-			url: "${pageContext.request.contextPath }/api/guestbook",
+			url: "${pageContext.request.contextPath }/guestbook/api/insert",
 			type: "post",
 			dataType: "json",
-			data: "a=ajax-add" +
-				  "&name=" + name + 
+			data: "name=" + name + 
 			  	"&password=" + password + 
 			  	"&content=" + content,
 			success: function( response ) { 
@@ -161,6 +162,7 @@ $(function(){
 					console.error( response.message );
 				return;
 			}
+					console.log( response.data );
 			
 			// rendering
 			render( response.data, true );
@@ -221,13 +223,13 @@ $(function(){
 						<tr>
 						</tr>
 						<tr>
-							<td><input type="text" name="name" placeholder="이름을 입력하세요"></td>
+							<td><input type="text" id="name" placeholder="이름을 입력하세요"></td>
 						</tr>
 						<tr>
-							<td><input type="password" name="pass" placeholder="비밀번호를 입력하세요"></td>
+							<td><input type="password" id="password" placeholder="비밀번호를 입력하세요"></td>
 						</tr>
 						<tr>
-							<td colspan=4><textarea name="content" id="content" placeholder="소감을 작성하시오"></textarea></td>
+							<td colspan=4><textarea name="content" id="tx-content" placeholder="소감을 작성하시오"></textarea></td>
 						</tr>
 						<tr >
 							<td colspan=4 align=right><input type="submit" VALUE=" 확인 "></td>

@@ -21,6 +21,9 @@ public class GuestbookDao {
 		sqlSession.insert("guestbook.insert",vo);
 		return vo.getNo();
 	}
+	public GuestbookVo get(Long no){
+		return sqlSession.selectOne("guestbook.getByNo",no);
+	}
 
 	public List<GuestbookVo> getList(){
 			// List<GuestbookVo> list = sqlSession.selectList("guestbook.getList);

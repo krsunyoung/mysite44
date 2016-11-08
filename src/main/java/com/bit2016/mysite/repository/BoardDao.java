@@ -1,6 +1,5 @@
 package com.bit2016.mysite.repository;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,6 +11,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.bit2016.mysite.vo.BoardVo;
+
 @Repository
 public class BoardDao {
 	
@@ -44,7 +44,6 @@ public class BoardDao {
 				pstmt.setString( 1, vo.getTitle() );
 				pstmt.setString( 2, vo.getContent() );
 				pstmt.setLong( 3, vo.getUserNo() );
-				
 			} else {
 				/* 답글 등록 */
 				String sql = 
@@ -93,6 +92,7 @@ public class BoardDao {
 			pstmt.setLong( 2, userNo );
 			
 			pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			System.out.println( "error:" + e );
 		} finally {
@@ -246,7 +246,7 @@ public class BoardDao {
 		return list;
 	}
 	
-	public void increaseGroupOrder( Integer groupNo, Integer orderNo ){
+	public void increaseGroupOrder( Integer groupNo, Integer orderNo ){ //댓글깊이
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
