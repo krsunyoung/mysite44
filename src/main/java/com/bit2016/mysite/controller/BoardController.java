@@ -3,8 +3,6 @@ package com.bit2016.mysite.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +16,6 @@ import com.bit2016.mysite.vo.BoardVo;
 import com.bit2016.mysite.vo.UserVo;
 import com.bit2016.security.Auth;
 import com.bit2016.security.AuthUser;
-import com.bit2016.spring.web.util.WebUtil;
 
 @Controller
 @RequestMapping( "/board" )
@@ -78,7 +75,8 @@ public class BoardController {
 		model.addAttribute( "boardVo", boardVo );
 		model.addAttribute( "page", page );
 		model.addAttribute( "keyword", keyword );
-
+		//keyword에 WebUtil을 만들어서 따로 encoding을 해줬지만 안해줘도 아직 차이를 느끼지 못하여 삭제 하고 진행
+		// 추후 문제가 있을시 WebUtil을 만들어서 encoding 설정을 해야함.
 		return "board/modify";
 	}
 	@Auth
@@ -127,7 +125,7 @@ public class BoardController {
 		return 
 			"redirect:/board/view" +	
 			"?no=" + boardVo.getNo() + 
-			"&kwd=" + WebUtil.encodeURL( keyword, "UTF-8");
+			"&kwd=" + keyword;
 	}
 	
 	@Auth
@@ -151,7 +149,7 @@ public class BoardController {
 		return 
 			"redirect:/board" +
 			"?p=" + page + 
-			"&kwd=" + WebUtil.encodeURL( keyword, "UTF-8");
+			"&kwd=" + keyword;
 	}
 
 	@Auth
@@ -189,6 +187,6 @@ public class BoardController {
 		return
 			"redirect:/board" +
 			"?p=" + page + 
-			"&kwd=" + WebUtil.encodeURL( keyword, "UTF-8");
+			"&kwd=" +keyword;
 	}
 }

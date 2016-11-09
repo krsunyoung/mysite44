@@ -66,6 +66,7 @@ public class BoardService {
 		}
 		
 		//3. view에서 페이지 리스트를 렌더링 하기위한 데이터 값 계산
+		//currentBlock 현재 있는 페이즈 블럭 
 		int beginPage = currentBlock == 0 ? 1 : (currentBlock - 1)*PAGE_SIZE + 1;
 		int prevPage = ( currentBlock > 1 ) ? ( currentBlock - 1 ) * PAGE_SIZE : 0;
 		int nextPage = ( currentBlock < blockCount ) ? currentBlock * PAGE_SIZE + 1 : 0;
