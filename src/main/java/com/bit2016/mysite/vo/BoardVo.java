@@ -6,10 +6,10 @@ public class BoardVo {
 	private String title;
 	private String content;
 	private String regdate;
-	private int hit;
-	private int groupNo;
-	private int orderNo;
-	private int depth;
+	private Integer hit;
+	private Integer groupNo;
+	private Integer orderNo;
+	private Integer depth;
 	private Long userNo;
 	private String userName;
 	

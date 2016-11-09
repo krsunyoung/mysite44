@@ -1,16 +1,15 @@
 package com.bit2016.mysite.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bit2016.mysite.service.UserService;
 import com.bit2016.mysite.vo.UserVo;
+import com.bit2016.security.Auth;
+import com.bit2016.security.AuthUser;
 
 @Controller
 @RequestMapping("/user")
@@ -36,7 +35,7 @@ public class UserController {
 	public String joinSuccess(){
 		return "user/joinsuccess";
 	}
-	@RequestMapping("/login")
+	/*@RequestMapping("/login")
 	public String login(
 			@RequestParam(value="email", required=true, defaultValue=" ") String email,
 			@RequestParam(value="password", required=true, defaultValue=" ") String password,
@@ -49,32 +48,38 @@ public class UserController {
 		session.setAttribute("authUser", userVo);
 		return "redirect:/";
 	}
+	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session){
 		session.removeAttribute("authUser");
 		session.invalidate();
 		return "redirect:/";
 	}
+	*/
+	
+	@Auth
 	@RequestMapping("/modifyform")
-	public String modifyForm(HttpSession session, Model model){
-		UserVo authUser=(UserVo)session.getAttribute("authUser");
+	public String modifyForm(@AuthUser UserVo authUser, Model model){
+		/*	UserVo authUser=(UserVo)session.getAttribute("authUser");
 		
 		//접근제한 (로그인없이 수정하는 사이트 들어갈때)
 		if( authUser == null){
 			return "redirect:/user/loginform";
-		}
+		}*/
 		UserVo vo = userService.getUser(authUser.getNo());
 		model.addAttribute("userVo",vo);  //modifyform 에 받는 값. 
 		return "user/modifyform";
 		
 	}
+
+	@Auth
 	@RequestMapping("/modify")
-	public String modify(HttpSession session, @ModelAttribute UserVo vo){
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+	public String modify(@AuthUser UserVo authUser, @ModelAttribute UserVo vo){
+		/*UserVo authUser = (UserVo)session.getAttribute("authUser");
 		//접근제어
 		if( authUser == null){
 			return "redirect : /user/loginform";
-		}
+		}*/
 		
 		vo.setNo(authUser.getNo());
 		userService.updateUser(vo);

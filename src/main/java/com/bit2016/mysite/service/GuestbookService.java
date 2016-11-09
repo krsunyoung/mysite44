@@ -22,7 +22,6 @@ public class GuestbookService {
 
 	public GuestbookVo add2(GuestbookVo vo){
 		Long no = guestbookDao.insert(vo);
-		System.out.println(no);
 		return guestbookDao.get(no);
 	}
 	public List<GuestbookVo> list(){

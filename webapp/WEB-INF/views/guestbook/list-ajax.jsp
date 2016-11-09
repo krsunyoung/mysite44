@@ -203,9 +203,9 @@ $(function(){
 		}
 		//console.log(scrollTop+":"+windowHeight+":"+documentHeight);
 	})
-	$("#btn-fetch").click(function(){ //버튼이 있을 경우에 눌릴때 5개씩 보여주는거 하지만 삭제 했으므로 필요없어짐.
+	/* $("#btn-fetch").click(function(){ //버튼이 있을 경우에 눌릴때 5개씩 보여주는거 하지만 삭제 했으므로 필요없어짐.
 		fetchList();
-	}) 
+	}) */ 
 		//1번째 리스트 가져오기
 		fetchList();
 })
