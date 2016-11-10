@@ -4,14 +4,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.bit2016.mysite.repository.GalleryDao;
+import com.bit2016.mysite.vo.GalleryVo;
 
 @Service
 public class GalleryService {
 	private static final String SAVE_PATH="/upload";
 	private static final String URL="/galley/asstes/";
 	
+	@Autowired
+	private GalleryDao galleryDao;
 	public String restore(MultipartFile multipartFile){
 		String url="";
 		try {
@@ -35,6 +41,7 @@ public class GalleryService {
 		}
 		return url;
 	}
+
 	private void writeFile(MultipartFile multipartFile, String saveFileName) throws IOException {
 		byte[] fileData = multipartFile.getBytes();
 		FileOutputStream fos = new FileOutputStream(SAVE_PATH+"/"+saveFileName);
