@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.bit2016.mysite.vo.GalleryVo;
 import com.bit2016.mysite.vo.GuestbookVo;
 
+@Repository
 public class GalleryDao {
 	@Autowired
 	private SqlSession sqlSession;

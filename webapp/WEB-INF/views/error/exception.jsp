@@ -11,5 +11,9 @@
 <body>
 	<h1> 에러에러</h1>
 	${exceptionMessage }
+	<p> Sorry~<br>
+		서비스에 일시적인 장애가 발생발생<br>
+		한시간후 실행해 주세요.
+	</p>
 </body>
 </html>

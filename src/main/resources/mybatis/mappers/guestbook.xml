@@ -4,7 +4,7 @@
 <mapper namespace="guestbook">
 	<select id="getList" resultType="guestbookvo">
 	<![CDATA[
-		select no, name, content, password ,to_char(req_date,'yyyy-mm-dd hh:mi:ss') as req_date 
+		select no, name, content, password, to_char(req_date,'yyyy-mm-dd hh:mi:ss') as req_date 
 		from GUESTBOOK order by req_date desc
 	]]>
 	</select>
