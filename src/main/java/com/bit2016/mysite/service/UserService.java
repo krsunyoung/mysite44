@@ -29,7 +29,7 @@ public class UserService {
 	}
 	
 	public boolean emailExist(String email){
-		return userDao.get(email) == null ;
+		return userDao.get(email) != null ;
 		
 	}
 }

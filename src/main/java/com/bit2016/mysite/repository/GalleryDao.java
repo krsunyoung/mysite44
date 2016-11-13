@@ -19,7 +19,7 @@ public class GalleryDao {
 	}
 	
 	public int insert(GalleryVo galleryVo){
-		return sqlSession.insert("gallery.insert", galleryVo);
+		return sqlSession.insert("gallery.upload", galleryVo);
 	}
 	
 }

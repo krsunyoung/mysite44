@@ -18,7 +18,7 @@ public class GalleryService {
 	
 	@Autowired
 	private GalleryDao galleryDao;
-	public String restore(MultipartFile multipartFile){
+	public String restore(GalleryVo vo, MultipartFile multipartFile){
 		String url="";
 		try {
 			if (multipartFile.isEmpty() == true) {
@@ -28,15 +28,22 @@ public class GalleryService {
 			String extName = originalFileName.substring(originalFileName.lastIndexOf('.') + 1,
 					originalFileName.length());
 			String saveFileName = generateSaveFileName(extName);
-		//	Long fileSize = multipartFile.getSize();
+			long fileSize = multipartFile.getSize();
 
 			writeFile(multipartFile, saveFileName);
 			
-			url = URL+saveFileName;
+			vo.setOrgFileName(originalFileName);
+			vo.setSaveFileName(saveFileName);
+			vo.setFileExtName(extName);
+			vo.setFileSize(fileSize);
+			
+			galleryDao.insert(vo);
+			
+//			url = URL+saveFileName;
 		} catch (IOException ex) {
-			//throw new UploadFileException("write file");
+			//throw new UploadFileException("write file");S
 			//ex.printStackTrace();
-			//log 남기기
+			//log �궓湲곌린
 			throw new RuntimeException("upload file");
 		}
 		return url;

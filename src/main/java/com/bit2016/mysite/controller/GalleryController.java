@@ -42,12 +42,12 @@ public class GalleryController {
 		@AuthUser UserVo authUser,
 		@ModelAttribute GalleryVo vo,
 		@RequestParam(value = "comments", required=true, defaultValue="") String comments,
-		@RequestParam(value = "file") MultipartFile file,
-		Model model){
-		String url = galleryService.restore(file);
+		@RequestParam(value = "file") MultipartFile file){
+		
 		vo.setUsersNo(authUser.getNo());
-		model.addAttribute("url",url);
+		galleryService.restore(vo, file);
 	//	galleryService.upload(vo);
+		
 		return "redirect:/gallery";
 	}
 	
