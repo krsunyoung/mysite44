@@ -8,6 +8,9 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
 	xmlns:mvc="http://www.springframework.org/schema/mvc">
 
+	<!--  auto proxy -->
+	<aop:aspectj-autoproxy />
+	
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven>
 
@@ -44,6 +47,7 @@
 
 	<!-- the mvc resources tag does the magic -->
 	<mvc:resources mapping="/galley/asstes/**" location="file:/upload/" />
+
 
 	<!-- annotation 설정을 하겠다. -->
 	<context:annotation-config />
@@ -99,6 +103,16 @@
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
 
+	<!-- 6. MessageSource -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="defaultEncoding" value="utf-8"/>
+		<property name="basenames">
+			<list>
+				<value>messages/message_ko</value>
+			</list>
+		</property>
+	</bean>
 
 
 
